@@ -1,0 +1,42 @@
+# RL-unlocked answers and base-model mid-layer decodability (MMLU)
+
+Logit lens: final norm + unembedding applied to mid-layer residual, argmax over A/B/C/D.
+Linear probe: multinomial logistic regression on mid-layer residual, 5-fold OOF, 4-way.
+Same raw multiple-choice prompt for base and instruct. Chance = 0.25.
+Bootstrap: 2000 resamples, percentile 95% CI, seed 42.
+
+## Qwen2.5-7B base: final-output MMLU accuracy (raw prompt, zero-shot)
+  accuracy = 0.7080  (95% CI 0.6885-0.7280, n=2000)
+
+## Qwen2.5-7B base: best mid-layer logit-lens accuracy
+  accuracy = 0.7040  (95% CI 0.6840-0.7235, n=2000)
+
+## Qwen2.5-7B base: best mid-layer linear-probe accuracy (5-fold OOF)
+  accuracy = 0.6530  (95% CI 0.6315-0.6730, n=2000)
+
+## Qwen2.5-7B-Instruct: final-output MMLU accuracy (raw prompt)
+  accuracy = 0.7235  (95% CI 0.7040-0.7420, n=2000)
+
+## Qwen2.5-7B base on RL-unlocked subset (instruct right, base output wrong): mid-layer logit-lens accuracy
+  accuracy = 0.5697  (95% CI 0.4909-0.6485, n=165)
+
+## Qwen2.5-7B base on RL-unlocked subset: mid-layer linear-probe accuracy
+  accuracy = 0.4121  (95% CI 0.3394-0.4848, n=165)
+
+## Llama-3.1-8B base: final-output MMLU accuracy (raw prompt, zero-shot)
+  accuracy = 0.6405  (95% CI 0.6190-0.6600, n=2000)
+
+## Llama-3.1-8B base: best mid-layer logit-lens accuracy
+  accuracy = 0.6180  (95% CI 0.5970-0.6390, n=2000)
+
+## Llama-3.1-8B base: best mid-layer linear-probe accuracy (5-fold OOF)
+  accuracy = 0.5990  (95% CI 0.5770-0.6195, n=2000)
+
+## Llama-3.1-8B-Instruct: final-output MMLU accuracy (raw prompt)
+  accuracy = 0.6660  (95% CI 0.6460-0.6860, n=2000)
+
+## Llama-3.1-8B base on RL-unlocked subset (instruct right, base output wrong): mid-layer logit-lens accuracy
+  accuracy = 0.2838  (95% CI 0.2296-0.3468, n=222)
+
+## Llama-3.1-8B base on RL-unlocked subset: mid-layer linear-probe accuracy
+  accuracy = 0.3649  (95% CI 0.2973-0.4324, n=222)

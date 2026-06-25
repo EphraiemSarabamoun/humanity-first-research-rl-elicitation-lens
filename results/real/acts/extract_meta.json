@@ -1,0 +1,17 @@
+{
+  "prompt": "The following is a multiple choice question. Answer with the letter of the correct option.\n\nQuestion: {q}\nA. {a}\nB. {b}\nC. {c}\nD. {d}\nAnswer:",
+  "n": 2000,
+  "seed": 42,
+  "models": [
+    "qwen2.5-7b-base",
+    "qwen2.5-7b-instruct",
+    "llama-3.1-8b-base",
+    "llama-3.1-8b-instruct"
+  ],
+  "letters": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ]
+}

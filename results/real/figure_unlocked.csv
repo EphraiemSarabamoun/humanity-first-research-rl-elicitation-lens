@@ -1,0 +1,5 @@
+section,correct,n,accuracy,chance
+llama_unlocked_lens,63,222,0.2838,0.25
+llama_unlocked_probe,81,222,0.3649,0.25
+qwen_unlocked_lens,94,165,0.5697,0.25
+qwen_unlocked_probe,68,165,0.4121,0.25

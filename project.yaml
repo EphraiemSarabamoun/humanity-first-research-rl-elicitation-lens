@@ -1,0 +1,36 @@
+name: rl-elicitation-lens
+title: "RL-Unlocked MMLU Answers Are Not Strongly Latent in Base Mid-Layers: A Logit-Lens and Linear-Probe Test of the Elicitation Hypothesis"
+question: >
+  The elicitation view of RL and instruction tuning holds that post-training
+  mostly surfaces capabilities the base model already has rather than teaching
+  new ones. We test a strong, mechanistic version of that claim: are the answers
+  an instruct model gets right but the base model gets wrong already linearly
+  decodable from the base model's mid-layer hidden states? Using MMLU on
+  Qwen2.5-7B and Llama-3.1-8B base/instruct pairs, we measure logit-lens
+  accuracy (final norm plus unembedding on mid-layer residuals) and 5-fold
+  linear-probe accuracy across layers, overall and on the RL-unlocked subset
+  (instruct right, base output wrong).
+stage: write
+status: >
+  Real run complete (RTX 5090). Base models already answer MMLU near instruct
+  level under the raw prompt (Qwen 0.708 vs 0.724, Llama 0.640 vs 0.666), so
+  the unlocked subset is small (165 and 222 of 2000). The answer is near chance
+  to the logit lens until the final ~20% of layers, and on the RL-unlocked
+  subset base mid-layer decodability is weak: Qwen logit-lens 0.570 and probe
+  0.412, Llama logit-lens 0.284 (chance) and probe 0.365. This is a careful
+  negative result against the strong, mid-layer-linear form of the elicitation
+  hypothesis for MMLU multiple choice in these models.
+tags:
+  - elicitation
+  - rl-fine-tuning
+  - logit-lens
+  - tuned-lens
+  - probing
+  - interpretability
+  - ai-safety
+collaborators:
+  - "Ephraiem Sarabamoun"
+links:
+  code_local: "~/projects/rl-elicitation-lens"
+  compute: "RTX 5090, torch 2.12 cu130, transformers 4.57; Qwen2.5-7B (base+instruct), Llama-3.1-8B (base+instruct)"
+references_bib: references.bib

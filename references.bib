@@ -1,0 +1,132 @@
+@article{belrose2023tunedlens,
+  title={Eliciting Latent Predictions from Transformers with the Tuned Lens},
+  author={Belrose, Nora and Furman, Zach and Smith, Logan and Halawi, Danny and Ostrovsky, Igor and McKinney, Lev and Biderman, Stella and Steinhardt, Jacob},
+  eprint={2303.08112}, archivePrefix={arXiv}, year={2023},
+  annote={Defines the tuned lens and the logit-lens lineage we use to read mid-layer predictions; the central method of this paper.}
+}
+
+@article{zhou2023lima,
+  title={LIMA: Less Is More for Alignment},
+  author={Zhou, Chunting and Liu, Pengfei and Xu, Puxin and Iyer, Srinivasan and Sun, Jiao and Mao, Yuning and Ma, Xuezhe and Efrat, Avia and Yu, Ping and Yu, Lili and others},
+  eprint={2305.11206}, archivePrefix={arXiv}, year={2023},
+  annote={The superficial-alignment hypothesis: alignment mostly surfaces base knowledge; the claim our decodability test probes mechanistically.}
+}
+
+@article{lin2023unlocking,
+  title={The Unlocking Spell on Base LLMs: Rethinking Alignment via In-Context Learning},
+  author={Lin, Bill Yuchen and Ravichander, Abhilasha and Lu, Ximing and Dziri, Nouha and Sclar, Melanie and Chandu, Khyathi and Bhagavatula, Chandra and Choi, Yejin},
+  eprint={2312.01552}, archivePrefix={arXiv}, year={2023},
+  annote={Argues tuning mainly shifts output style and that base models can be unlocked without weight updates; direct motivation for asking whether the answer is already latent.}
+}
+
+@article{ouyang2022instructgpt,
+  title={Training language models to follow instructions with human feedback},
+  author={Ouyang, Long and Wu, Jeffrey and Jiang, Xu and Almeida, Diogo and Wainwright, Carroll and Mishkin, Pamela and Zhang, Chong and Agarwal, Sandhini and Slama, Katarina and Ray, Alex and others},
+  eprint={2203.02155}, archivePrefix={arXiv}, year={2022},
+  annote={The canonical RLHF post-training pipeline whose "unlocking" effect we examine at the representational level.}
+}
+
+@article{bai2022hh,
+  title={Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback},
+  author={Bai, Yuntao and Jones, Andy and Ndousse, Kamal and Askell, Amanda and Chen, Anna and DasSarma, Nova and Drain, Dawn and Fort, Stanislav and Ganguli, Deep and Henighan, Tom and others},
+  eprint={2204.05862}, archivePrefix={arXiv}, year={2022},
+  annote={Establishes RLHF as the dominant post-training method; context for what "RL-unlocked" means in current instruct models.}
+}
+
+@article{rafailov2023dpo,
+  title={Direct Preference Optimization: Your Language Model is Secretly a Reward Model},
+  author={Rafailov, Rafael and Sharma, Archit and Mitchell, Eric and Ermon, Stefano and Manning, Christopher D and Finn, Chelsea},
+  eprint={2305.18290}, archivePrefix={arXiv}, year={2023},
+  annote={A widely used preference-optimization variant of post-training; part of the family of methods whose mechanism we ask about.}
+}
+
+@article{burns2022ccs,
+  title={Discovering Latent Knowledge in Language Models Without Supervision},
+  author={Burns, Collin and Ye, Haotian and Klein, Dan and Steinhardt, Jacob},
+  eprint={2212.03827}, archivePrefix={arXiv}, year={2022},
+  annote={Latent knowledge can be read from activations unsupervised; the strongest prior that internal states hold answers the output may not surface.}
+}
+
+@article{marks2023geometry,
+  title={The Geometry of Truth: Emergent Linear Structure in Large Language Model Representations of True/False Datasets},
+  author={Marks, Samuel and Tegmark, Max},
+  eprint={2310.06824}, archivePrefix={arXiv}, year={2023},
+  annote={Linear decodability of correctness from activations; the methodological template for our linear probe.}
+}
+
+@article{li2023iti,
+  title={Inference-Time Intervention: Eliciting Truthful Answers from a Language Model},
+  author={Li, Kenneth and Patel, Oam and Vi{\'e}gas, Fernanda and Pfister, Hanspeter and Wattenberg, Martin},
+  eprint={2306.03341}, archivePrefix={arXiv}, year={2023},
+  annote={Shows answers can be elicited by intervening on activations; a positive instance of latent-answer recovery that our negative MMLU result bounds.}
+}
+
+@article{zou2023repe,
+  title={Representation Engineering: A Top-Down Approach to AI Transparency},
+  author={Zou, Andy and Phan, Long and Chen, Sarah and Campbell, James and Guo, Phillip and Ren, Richard and Pan, Alexander and Yin, Xuwang and Mazeika, Mantas and others},
+  eprint={2310.01405}, archivePrefix={arXiv}, year={2023},
+  annote={Reads and steers high-level concepts as activation directions; frames decodability as a readout question.}
+}
+
+@article{kadavath2022know,
+  title={Language Models (Mostly) Know What They Know},
+  author={Kadavath, Saurav and Conerly, Tom and Askell, Amanda and Henighan, Tom and Drain, Dawn and Perez, Ethan and Schiefer, Nicholas and Hatfield-Dodds, Zac and DasSarma, Nova and others},
+  eprint={2207.05221}, archivePrefix={arXiv}, year={2022},
+  annote={Models carry internal self-knowledge of correctness; the behavioral analogue to the internal answer signal we probe.}
+}
+
+@article{arditi2024refusal,
+  title={Refusal in Language Models Is Mediated by a Single Direction},
+  author={Arditi, Andy and Obeso, Oscar and Syed, Aaquib and Paleka, Daniel and Panickssery, Nina and Gurnee, Wes and Nanda, Neel},
+  eprint={2406.11717}, archivePrefix={arXiv}, year={2024},
+  annote={A behavior introduced by post-training localizes to a single activation direction; a case where RL-shaped behavior is linearly latent, contrasting our MMLU finding.}
+}
+
+@article{turpin2023saywhat,
+  title={Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting},
+  author={Turpin, Miles and Michael, Julian and Perez, Ethan and Bowman, Samuel R},
+  eprint={2305.04388}, archivePrefix={arXiv}, year={2023},
+  annote={Output can diverge from internal computation; motivates comparing internal decodability against the model's own output.}
+}
+
+@article{park2023linearrep,
+  title={The Linear Representation Hypothesis and the Geometry of Large Language Models},
+  author={Park, Kiho and Choe, Yo Joong and Veitch, Victor},
+  eprint={2311.03658}, archivePrefix={arXiv}, year={2023},
+  annote={Formalizes when concepts are linear directions; grounds our linear-probe and logit-lens decodability metrics.}
+}
+
+@article{gurnee2023spacetime,
+  title={Language Models Represent Space and Time},
+  author={Gurnee, Wes and Tegmark, Max},
+  eprint={2310.02207}, archivePrefix={arXiv}, year={2023},
+  annote={Linear world-feature directions emerge across layers; evidence that some content is linearly present mid-network, which we test for answers.}
+}
+
+@article{hendrycks2021mmlu,
+  title={Measuring Massive Multitask Language Understanding},
+  author={Hendrycks, Dan and Burns, Collin and Basart, Steven and Zou, Andy and Mazeika, Mantas and Song, Dawn and Steinhardt, Jacob},
+  eprint={2009.03300}, archivePrefix={arXiv}, year={2020},
+  annote={The MMLU benchmark we use as the answer-bearing task.}
+}
+
+@article{manakul2023selfcheck,
+  title={SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models},
+  author={Manakul, Potsawee and Liusie, Adian and Gales, Mark JF},
+  eprint={2303.08896}, archivePrefix={arXiv}, year={2023},
+  annote={Output-level correctness signals; contrast for our internal-state decodability approach.}
+}
+
+@article{qwen2024report,
+  title={Qwen2.5 Technical Report},
+  author={Yang, An and Yang, Baosong and Zhang, Beichen and Hui, Binyuan and Zheng, Bo and Yu, Bowen and Li, Chengyuan and Liu, Dayiheng and Huang, Fei and Wei, Haoran and others},
+  eprint={2412.15115}, archivePrefix={arXiv}, year={2024},
+  annote={Model card for the Qwen2.5-7B base and instruct pair we study.}
+}
+
+@article{llama2024herd,
+  title={The Llama 3 Herd of Models},
+  author={Dubey, Abhimanyu and Jauhri, Abhinav and Pandey, Abhinav and Kadian, Abhishek and Al-Dahle, Ahmad and Letman, Aiesha and Mathur, Akhil and Schelten, Alan and Yang, Amy and Fan, Angela and others},
+  eprint={2407.21783}, archivePrefix={arXiv}, year={2024},
+  annote={Model card for the Llama-3.1-8B base and instruct pair we study.}
+}

@@ -1,0 +1,20 @@
+{
+  "headline_mid": {
+    "qwen2.5-7b-base": 25,
+    "llama-3.1-8b-base": 29
+  },
+  "unlocked": {
+    "qwen2.5-7b": {
+      "n": 165,
+      "mid_layer": 25,
+      "instruct_acc": 0.7235,
+      "base_final_acc": 0.708
+    },
+    "llama-3.1-8b": {
+      "n": 222,
+      "mid_layer": 29,
+      "instruct_acc": 0.666,
+      "base_final_acc": 0.6405
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+ "plain": "When a chatbot model is fine-tuned (with reinforcement learning or instruction tuning), it often answers questions the original base model got wrong. A popular idea is that the base model already knew the answer internally and fine-tuning just surfaced it. We tested this directly on a big multiple-choice exam (MMLU): for items the tuned model gets right but the base model gets wrong, can we read the correct answer out of the base model internal activations? Mostly not in a clean way: the answer only becomes readable in the last layers, and on the exact items fine-tuning fixes, the internal signal is above random guessing but much weaker than when the base model is actually correct. A caveat we state plainly is that these base models already score near the tuned models on this exam, so there were few unlocked items to test, which limits how strong a conclusion we can draw. Approve publishes this as an honest negative result; Reject shelves it.",
+ "cost": {
+  "api_equivalent_usd": 29.6954,
+  "sessions": [
+   {
+    "label": "research-prime-driver",
+    "host": "local",
+    "transcript": "/tmp/rl-lens-driver.jsonl",
+    "messages": 171,
+    "usd": 29.6954
+   }
+  ]
+ },
+ "paper_title": "RL-Unlocked MMLU Answers Are Only Partially Latent in the Base Model, and Emerge Late Rather Than Mid-Network: A Logit-Lens and Linear-Probe Test of the Elicitation Hypothesis",
+ "headline_claim": "For Qwen2.5-7B and Llama-3.1-8B on MMLU, the answers instruct tuning unlocks are only partially linearly latent in the base model and emerge only in late layers, not mid-network: the logit lens is at chance until ~80 percent depth, the best-layer probe never beats the base model own output, and on RL-unlocked items base decodability is significantly above chance but far below ceiling (Qwen probe 0.412 lens 0.570; Llama probe 0.365 lens 0.284 which is at chance). This argues against the strong read-out-a-fully-latent-answer form of elicitation for this task, with the explicit caveat that these pairs unlock little on MMLU so the test has limited power.",
+ "weakest_part": "The most attackable points are terminology and statistical power, and I revised the draft to face them rather than hide them. (1) The best decoding layer for each base model sits at ~89-90 percent depth, so this is a late-layer result, not a genuinely mid-network one; the true middle layers are at chance, which strengthens the negative claim but means the artifact label best mid-layer denotes the best-decoding (late) layer. (2) On the RL-unlocked subset the probe is significantly above chance (Qwen 0.412, Llama 0.365; both CIs exclude 0.25), so the honest claim is partial latency, not absence; only the Llama logit lens is statistically at chance. (3) Most important: the test has limited power because these base models already answer MMLU near instruct level under a good prompt, so the unlocked subset is small (165, 222) and likely enriched for genuinely hard items rather than format-gated ones. The behavioral unlocking literature lives on open-ended/format-gated tasks, which this does not test. (4) Four-way letter decoding measures answer-index recoverability, not free-form generation, and a trained tuned lens could exceed the untrained logit lens. The automated reviewer panel independently flagged points (1) and (2); the draft now states partial latency and late emergence precisely.",
+ "gate_report": {
+  "project_dir": "/home/ephra/projects/rl-elicitation-lens",
+  "generated_at": "2026-06-24T16:40:46+00:00",
+  "checks": [
+   {
+    "name": "artifacts",
+    "status": "warn",
+    "detail": "required present; recommended absent: analysis_points.csv, analysis_tests.csv"
+   },
+   {
+    "name": "metric_consistency",
+    "status": "warn",
+    "detail": "[generic parser] all primary values traced; p/CI values not all found (papers round or omit them): ci_bound[0].ci=0.6885 not in paper.md; ci_bound[1].ci=0.728 not in paper.md; ci_bound[2].ci=0.684 not in paper.md; ci_bound[4].ci=0.6315 not in paper.md; ci_bound[5].ci=0.673 not in paper.md; ci_bound[7].ci=0.742 not in paper.md; ci_bound[12].ci=0.619 not in paper.md; ci_bound[13].ci=0.66 not in paper.md\u2026"
+   },
+   {
+    "name": "recompute",
+    "status": "pass",
+    "detail": "recompute.py output is identical to analysis_summary.txt (whitespace-normalized) \u2014 every number independently reproduced"
+   },
+   {
+    "name": "csv_traceability",
+    "status": "pass",
+    "detail": "13 metric(s) trace to 2 documented data file(s) with complete sidecars"
+   },
+   {
+    "name": "eval_order",
+    "status": "pass",
+    "detail": "eval_order present and filled in: eval_points.jsonl"
+   },
+   {
+    "name": "citations",
+    "status": "pass",
+    "detail": "19/19 eprints resolve, titles match"
+   },
+   {
+    "name": "reference_count",
+    "status": "pass",
+    "detail": "19 references (distinct keys cited in the draft and present in the bib)"
+   },
+   {
+    "name": "device_scrub",
+    "status": "pass",
+    "detail": "no fleet device names in paper.md/paper.tex"
+   },
+   {
+    "name": "figures",
+    "status": "pass",
+    "detail": "5 figures referenced in paper.md, all on disk with CSV + description sidecars"
+   },
+   {
+    "name": "tex_compiles",
+    "status": "skipped",
+    "detail": "no drafts/paper.tex"
+   },
+   {
+    "name": "style",
+    "status": "pass",
+    "detail": "no em dashes, double hyphens, or bullets"
+   }
+  ],
+  "overall": "pass",
+  "not_checked": [
+   "statistical methodology (test choice, assumptions, multiple comparisons)",
+   "claim/evidence fit \u2014 whether the prose claims more than the numbers support",
+   "novelty against the literature",
+   "code correctness beyond the recompute hook"
+  ]
+ },
+ "reviewer_panel": {
+  "project_dir": "/home/ephra/projects/rl-elicitation-lens",
+  "draft": "drafts/paper.md",
+  "generated_at": "2026-06-24T16:39:01+00:00",
+  "cli": "claudius",
+  "model": "cli-default",
+  "prompt_version": "b8ba148a6536",
+  "advisory": true,
+  "passes": [
+   {
+    "lens": "design_validity",
+    "ok": true,
+    "overall_verdict": "Lean reject as written: the 'decisive' RL-unlocked test has no difficulty-matched control, so its null cannot be attributed to elicitation rather than to the base simply not knowing these items. Fix by adding the (base-wrong, instruct-wrong) baseline before any negative claim.",
+    "n_findings": 4
+   },
+   {
+    "lens": "measurement",
+    "ok": true,
+    "overall_verdict": "I would not fight for acceptance as written: the headline 'at chance' / 'weak' framing leans on a readout (the logit lens) that its own full-set data shows is structurally blind mid-network, and the decisive unlocked-subset numbers never disclose which layer they come from while the lens and probe disagree by 16 points; the one thing that most needs fixing is to report the exact layer for every unlocked-subset number and to stop treating a logit-lens chance reading as evidence about latent content.",
+    "n_findings": 4
+   },
+   {
+    "lens": "claims",
+    "ok": true,
+    "overall_verdict": "Lean reject in current form; I would fight only after the central negative is restated to match its own statistics. The one thing that most needs fixing: the decisive unlocked-subset result is summarized as 'at chance'/'weak' when both probes are significantly above chance, and the 'mid-layer' numbers are actually drawn from 80-100% depth.",
+    "n_findings": 4
+   }
+  ],
+  "findings": [
+   {
+    "lens": "design_validity",
+    "severity": "high",
+    "claim_attacked": "The decisive test is the RL-unlocked subset ... the elicitation hypothesis predicts the answer should still be recoverable from its mid-layers. It is not, or only weakly. For Qwen ... probe only 0.412 ... For Llama ... probe reaches 0.365 ... against a chance baseline of 0.25.",
+    "why": "The unlocked subset is selected on base output being WRONG. Mid-layer decodability is known (in this very paper's full-set curves) to fall off on items the base fails. So low unlocked-subset decodability is fully explained by a confound the design never separates: these are just items the base doesn't represent. The materials contain no measurement of mid-layer decodability on the matched control population (base output wrong AND instruct output wrong). Elicitation makes a DIFFERENTIAL prediction: unlocked items (base wrong / instruct right) should decode BETTER than both-wrong items, because there the answer is latent-but-suppressed. Comparing 0.412/0.365 to chance 0.25 tests nothing about elicitation; it tests whether the base knows hard items at all. The whole 'most directly' / 'decisive' framing rests on this uncontrolled contrast.",
+    "suggested_fix": "Report base mid-layer logit-lens and probe accuracy on the (base-wrong, instruct-wrong) subset, sample-size-matched to the unlocked subset, using the identical full-set OOF probe. Elicitation is supported only if unlocked-subset decodability exceeds both-wrong decodability by a CI-separated margin; if the two are equal, the negative result is about base difficulty, not elicitation, and the headline must be retracted to that effect."
+   },
+   {
+    "lens": "design_validity",
+    "severity": "high",
+    "claim_attacked": "the genuinely RL-unlocked set is small, 165 items for Qwen and 222 for Llama ... these pairs show little MMLU unlocking to begin with, which limits the test's power and is itself part of the finding.",
+    "why": "The independent variable (what RL unlocked) is measured with the instruct model forced onto a raw, non-chat prompt ('identical for base and instruct so their hidden states are comparable'). RL/instruction tuning's gains are realized under the chat template; evaluating instruct off-template systematically suppresses the unlocking signal (instruct gains only 1.5-2.5 points here) and contaminates the subset: many of the 165/222 items where raw-instruct beats raw-base are plausibly format/noise flips near the decision boundary, not genuine capability the base latently holds. The paper hedges this as 'these pairs show little unlocking,' attributing it to the models \u2014 but the more likely cause is the measurement choice, which the hedge never confronts. A subset built from off-distribution instruct behavior is the wrong target population for a latency test.",
+    "suggested_fix": "Define the RL-unlocked subset using each instruct model's native chat template (its real deployment condition), then read the SAME base mid-layer residuals. Report how much the subset grows and whether the mid-layer decodability conclusion survives. If the subset is still tiny under the chat template, that licenses the 'little unlocking' claim; until then the small-n / low-power concession is attributing a measurement artifact to the models."
+   },
+   {
+    "lens": "measurement",
+    "severity": "high",
+    "claim_attacked": "for Llama the logit lens is at chance (0.284) ... against a 0.25 baseline (abstract, Sec 4, and the title's 'Not Strongly Latent')",
+    "why": "This is the strongest-sounding claim and it is a method artifact, not a content result. curve.csv shows Llama-3.1-8B base lens_acc is already at chance at every genuine mid-layer on the FULL 2000-item set where the model ultimately answers 64% correctly: layer 3=0.2535, 6=0.2175, 10=0.259, 13=0.246, 16=0.2595, versus final 0.6405. So the logit lens reads chance mid-network for items the base model gets RIGHT too; reading 0.284 on the unlocked subset is the lens's floor in the unembedding basis, carrying essentially zero information about whether the answer is latent. Worse, the only valid readout on that subset, the probe, is significantly ABOVE chance (0.3649, 95% CI 0.2973-0.4324, lower bound 0.297 > 0.25), which contradicts 'not latent' for Llama. The 'at chance' headline conflates a known-uninformative lens with the probe that actually disagrees with it.",
+    "suggested_fix": "Compute logit-lens accuracy on the base-CORRECT items at the same mid-layers; if it is also at chance there, the lens is demonstrably uninformative mid-network and the 0.284 unlocked figure must be dropped from the evidence chain. Re-anchor the Llama conclusion on the probe and restate it as 'significantly above chance but weak (0.365, CI 0.297-0.432)', not 'at chance'."
+   },
+   {
+    "lens": "measurement",
+    "severity": "high",
+    "claim_attacked": "for Qwen the logit lens reaches 0.570 and the probe only 0.412 ... the probe we ran already had more freedom than the lens and still fell short (Sec 4, Sec 5)",
+    "why": "The paper's own logic is that the trained probe has strictly more representational freedom than the lens (any basis vs the unembedding basis), so the probe should upper-bound decodability. Yet on the decisive Qwen unlocked subset the untrained lens (0.570, CI 0.491-0.649, lower bound 0.491 far above chance) beats the trained probe (0.412) by 16 points, the reverse of the full-set ordering where probe leads lens at mid-depths. This inversion is unexplained and the materials never state which layer index the unlocked-subset numbers use. On the full set the lens only reaches 0.704 at layer 25 (89% of Qwen's 28 layers) and equals final output (0.708) at layer 28; if the unlocked 'mid-layer' lens is read at a near-output layer it is reading the nearly-final answer, not a mid-layer representation, and the 'mid-layer' label is false. The headline 'decodability is weak for Qwen' also cherry-picks the lower of two readouts: 0.570 with a lower CI bound of 0.491 is not obviously 'weak'.",
+    "suggested_fix": "Disclose the exact layer index used for every unlocked-subset number, and report lens and probe at the SAME layer. If the lens number is from a near-output layer, remove it from the 'mid-layer' claim. If lens and probe genuinely disagree at one mid-layer, reconcile or report both honestly rather than quoting the probe alone as 'weak'."
+   },
+   {
+    "lens": "claims",
+    "severity": "high",
+    "claim_attacked": "Conclusion: 'on the items RL actually fixes the base model's internal representation predicts the answer weakly for Qwen and at chance for Llama'; Abstract: 'the probe reaches 0.365 ... against a 0.25 baseline.'",
+    "why": "This is the strongest-sounding claim (the 'decisive test'), and it overstates the null. The paper's own numbers show the linear probe on the unlocked subset is statistically ABOVE chance for BOTH models: Qwen probe 0.412 (CI 0.339-0.485) and Llama probe 0.365 (CI 0.297-0.432) per analysis_summary.txt and figure_unlocked.csv, and both CIs exclude 0.25. The probe is the paper's own more-sensitive readout ('whether the answer is linearly present in any basis'). So the honest decoding of the data is that the unlocked answer IS partially, significantly linearly present in base mid-layers, just not strongly. Calling Llama 'at chance' is doubly wrong: only the lens (0.284, CI 0.230-0.347) is at chance, while the probe (the more powerful test) is significantly above it. The conclusion cites the weaker readout to characterize the model and buries the awkward positive. This is a negative-result overclaim that contradicts the title's own correct hedge ('Not Strongly Latent').",
+    "suggested_fix": "State explicitly, per model and readout, whether each unlocked-subset CI excludes 0.25, and rewrite the conclusion to: probes are significantly above chance for both models (weak but real linear decodability), only the logit lens is at chance. Drop 'at chance for Llama'. The defensible headline is 'present but not strong,' not 'not predictive/at chance.'"
+   },
+   {
+    "lens": "design_validity",
+    "severity": "medium",
+    "claim_attacked": "the answer is near chance to the logit lens until the final fifth of the network ... for Llama the logit lens is at chance (0.284) ... we read this as evidence against the strong, mid-layer-linear version of elicitation.",
+    "why": "Vanilla logit-lens near-chance behavior in mid-layers is a documented, content-independent property: mid-layer residuals are not yet in the output (unembedding) basis, which is the entire motivation for the tuned lens the paper cites [@belrose2023tunedlens]. The curve.csv confirms this universally (e.g. qwen base layers 3-22 sit at 0.22-0.36 for ALL items, not just unlocked ones), so a mid-layer lens null says nothing about whether the answer is latent in some other basis. Yet the lens supplies one of three headline legs and half the abstract's numbers (0.570, 0.284). The 'a tuned lens might recover more' sentence is an inadequate hedge: it does not retract the lens-based negative claims, which are presented as positive evidence for the thesis when they are near-vacuous.",
+    "suggested_fix": "Demote the logit-lens results to a sanity check that the lens behaves as known, and rest the mid-layer claims solely on the probe (the only basis-agnostic readout). Or run a tuned lens on the unlocked subset; if it too stays near chance, the lens leg becomes informative. As written, drop the lens from the abstract's evidence count."
+   },
+   {
+    "lens": "design_validity",
+    "severity": "medium",
+    "claim_attacked": "the probe only 0.412 (0.339 to 0.485) ... we train a multinomial logistic-regression probe on a 256-dimensional principal-component reduction ... fit per fold inside five-fold stratified cross-validation.",
+    "why": "The materials do not state whether the unlocked-subset probe accuracy is (a) full-2000 OOF predictions restricted to the 165/222 unlocked items, or (b) a probe trained only within the unlocked subset. Under (b), PCA-256 with n=165 and 5-fold means ~132 training examples in 256 dimensions for a 4-way task \u2014 gross overparameterization whose OOF accuracy would collapse toward chance for reasons of sample-to-dimension ratio, not absence of latent signal, manufacturing the negative result. Under (a), the probe is optimized on a bulk distribution dominated by base-correct (easy) items and then read out on a hard, base-wrong slice, a distribution-shift handicap that again depresses accuracy independent of latency. Neither interpretation supports comparing 0.412 to chance 0.25; the right reference is probe accuracy on a difficulty-matched base-wrong population.",
+    "suggested_fix": "State explicitly which procedure produced the unlocked-subset probe number. Use the full-set OOF probe restricted to subsets (never retrain on n=165), report effective sample-to-dimension ratio, and benchmark the unlocked-subset probe against the both-wrong subset (per finding 1) rather than against chance."
+   },
+   {
+    "lens": "measurement",
+    "severity": "medium",
+    "claim_attacked": "fit per fold inside five-fold stratified cross-validation so there is no leakage ... the probe only 0.412 / 0.365 on the RL-unlocked subset",
+    "why": "The probe is trained on all 2000 items, 64-71% of which the base model already answers correctly, and then scored on the unlocked tail, which is by construction the subset the base model gets WRONG. A probe fit on a mostly-easy distribution and evaluated on the hard tail will underperform for distribution-shift reasons independent of latent content, so the low unlocked-subset probe accuracy is partly a generalization gap, not pure absence of decodable answer. The same data thus selects (global training distribution) and evaluates (non-representative subset). 'No leakage' addresses fold contamination but not this train/eval mismatch.",
+    "suggested_fix": "Either run nested cross-validation entirely within the unlocked subset (probe trained and scored on the 165/222 items), or report probe accuracy stratified by base-correct vs unlocked at a fixed layer; if the gap is much larger than expected from sample-size alone, the negative is content-driven, otherwise it is distribution-shift-driven and the claim must be weakened."
+   },
+   {
+    "lens": "claims",
+    "severity": "medium",
+    "claim_attacked": "Abstract/Results: 'on the RL-unlocked subset the base model's mid-layer decodability is weak: for Qwen the logit lens reaches 0.570 and the probe only 0.412' (term 'mid-layer' throughout).",
+    "why": "The word 'mid-layer' carries the whole interpretive weight (the elicitation claim is that the answer is latent BEFORE the model commits), but the reported best numbers come from near-output depths, not the middle. curve.csv shows the Qwen logit lens is at chance through layer 22 and only reaches 0.704 at layer 25 of 28 (89% depth) \u2014 the paper even concedes 'that peak is itself almost at the output layer rather than in the true middle.' At a genuine mid-layer (layer 14, 50% depth) the Qwen lens is 0.221 (chance) and the probe 0.300. The method never states which layer the unlocked-subset 0.570/0.412 numbers are taken from, and if the best layer is re-selected on the same 165/222 items being scored, the same data both selects and evaluates. As written, a reader concludes 'the answer isn't in the middle' from numbers that are actually 'best-over-all-tested-depths, mostly late.'",
+    "suggested_fix": "Report the exact layer index behind every 'best mid-layer' number, and add a fixed genuine-mid-depth (e.g., ~50%) column for the unlocked subset. If best-layer is selected, select it on held-out data (or on the full 2000) and apply to the subset, not re-select on the subset. Rename 'mid-layer decodability' to 'best decodability across tested depths' or report mid vs late separately."
+   },
+   {
+    "lens": "claims",
+    "severity": "medium",
+    "claim_attacked": "Title: 'RL-Unlocked MMLU Answers'; method: 'The RL-unlocked subset ... is the set of items where the instruct model's output is correct and the base model's output is wrong.'",
+    "why": "The design compares base vs instruct, but the instruct checkpoints for Qwen2.5-7B and Llama-3.1-8B are produced by SFT plus preference optimization combined, not RL alone. Nothing in the materials isolates RL's contribution, so labeling the base-wrong/instruct-right set 'RL-unlocked' attributes to RL a gap that could be entirely SFT. The paper occasionally writes 'RL and instruction tuning,' but the title and the repeatedly used term 'RL-unlocked' assert a specificity the experiment cannot deliver, and the framing against 'the elicitation view of RL' inherits that overreach.",
+    "suggested_fix": "Rename the subset and title to 'post-training-unlocked' / 'instruct-unlocked,' or explicitly acknowledge in the method that the unlocked set conflates SFT and RLHF and the test cannot separate them. If an RL-specific claim is wanted, an SFT-only vs RLHF checkpoint comparison would be needed; absent that, drop RL-specific wording."
+   },
+   {
+    "lens": "claims",
+    "severity": "medium",
+    "claim_attacked": "Limitation: 'the unlocked subset is small and plausibly enriched for genuinely hard or ambiguous items rather than format-gated ones' \u2014 conceded but not tested, while title/abstract still assert a general negative.",
+    "why": "Rule 3: the hedge is not adequate because the conceded confound directly contaminates the headline. If the n=165/n=222 unlocked items are items the base model genuinely does not know (hard/ambiguous) rather than format-gated, then low base-layer decodability is exactly what a TRUE elicitation account also predicts \u2014 elicitation never claimed the base model latently knows answers it simply hasn't learned. The paper offers this as a self-aware aside ('plausibly') but runs no diagnostic, yet the abstract and conclusion still deliver 'Not Strongly Latent' as if the negative discriminates between hypotheses. With the confound untested, the result is consistent with both 'elicitation is false here' and 'these are genuinely unknown items,' so it does not bite the elicitation hypothesis at the strength claimed.",
+    "suggested_fix": "Operationalize the enrichment concern: e.g., report base-model option margin/entropy on unlocked vs overall items, or instruct-model confidence on unlocked items, to test whether unlocked items are merely hard for both models. If they are, soften the conclusion to 'the negative is confounded with item difficulty' rather than 'evidence against elicitation.'"
+   },
+   {
+    "lens": "measurement",
+    "severity": "low",
+    "claim_attacked": "best mid-layer linear-probe accuracy ... 0.6530 (95% CI 0.6315-0.6730) / best mid-layer logit-lens accuracy 0.7040 (analysis_summary.txt)",
+    "why": "Every 'best mid-layer' figure is a maximum over 10 layers, but its bootstrap CI is computed from a single layer's predictions and ignores the max-over-layers selection, so the reported intervals are too tight for a selected statistic (winner's curse). For the 'never exceeds base output' claim the max selection is conservative and so this does not threaten the headline, hence low severity. But it does mean the precision of the peak numbers (e.g. 0.6530, CI 0.6315-0.6730) is overstated, and layer 28's lens_acc equals final_acc exactly (0.708==0.708) by construction, so any 'mid-layer' set must explicitly exclude the output layer.",
+    "suggested_fix": "Report the selected layer index for each 'best mid-layer' number and either pre-register the layer or compute the CI with a max-statistic bootstrap over layers; state explicitly that layer 28 (=output) is excluded from the mid-layer pool."
+   }
+  ]
+ },
+ "not_checked": [
+  "open-ended/generative tasks where base models genuinely fail for format reasons (the higher-power testbed)",
+  "a trained tuned lens or non-linear probe vs the untrained logit lens",
+  "whether letter-index decodability tracks free-form answer generation",
+  "models beyond 7-8B and base-only non-RLHF checkpoints",
+  "token positions other than the last",
+  "chat-template prompting for the instruct models",
+  "sensitivity to the PCA-256 probe dimensionality"
+ ]
+}

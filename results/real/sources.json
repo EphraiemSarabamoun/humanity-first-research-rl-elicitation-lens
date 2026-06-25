@@ -1,0 +1,10 @@
+{
+  "metrics": {
+    "*": {
+      "csv": "curve.csv"
+    }
+  },
+  "per_example": [
+    "eval_points.jsonl"
+  ]
+}
